@@ -1,6 +1,7 @@
-import api from './services/api';
 import React, { useEffect, useState } from 'react';
-
+import api from './services/api';
+import Card from './components/Card/Card';
+import GlobalStyles from './styles/global'
 
 function App() {
 
@@ -11,7 +12,7 @@ function App() {
 
   function validate(e) {
     if(e.length === 8){
-      setValidateAlert('CEP Válido!');
+      setValidateAlert('');
       setCep(e);
     }else{
       setValidateAlert('CEP Inválido');
@@ -26,26 +27,23 @@ function App() {
   
 
   return (
-    <div>
-      <form>
-          <input type="number" placeholder="Ex.: 0000000" onChange={(e) => validate(e.target.value)}/>
-      </form>
+    <main>
 
-      <div>
-        <p>{validateAlert}</p>
+      <div className="inputs">
+        <input type="number" max={1} placeholder="Ex.: 0000000" onChange={(e) => validate(e.target.value)}/>
+
 
         <button onClick={() => {
           callApi ? setCallApi(false) : setCallApi(true)
         }}>Buscar</button>
       </div>
-      
-      <div>
-        <h2>CEP: {cep.cep}</h2>
-        <p>Logradouro: {cep.logradouro}</p>
-        <p>Bairro: {cep.bairro}</p>
-        <p>UF: {cep.uf}</p>
-      </div>
-    </div>
+
+      <p>{validateAlert}</p>
+
+
+      <Card cep={cep.cep} logradouro={cep.logradouro} bairro={cep.bairro} uf={cep.uf} ibge={cep.ibge} ddd={cep.ddd} erro={cep.erro}/>
+      <GlobalStyles />
+    </main>
   );
 }
 
